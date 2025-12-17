@@ -17,8 +17,11 @@ if errorlevel 1 (
     echo [ERROR] Docker未运行，请先启动Docker Desktop
     echo.
     echo [INFO] 请确保：
-    echo    1. Docker Desktop已安装并运行
-    echo    2. 启用WSL 2引擎（推荐）
+    echo    1. Docker Desktop已安装并正在运行
+    echo    2. 启用WSL 2引擎（推荐，可在Docker Desktop设置中配置）
+    echo    3. 如果已安装但未运行，请从开始菜单启动Docker Desktop
+    echo.
+    echo [INFO] 下载地址: https://www.docker.com/products/docker-desktop/
     echo.
     pause
     exit /b 1
