@@ -2,26 +2,26 @@
 chcp 65001 >nul
 setlocal enabledelayedexpansion
 
-REM ä»Šå¤©åƒä»€ä¹ˆ - Windowså¯åŠ¨è„šæœ¬
+REM ½ñÌì³ÔÊ²Ã´ - WindowsÆô¶¯½Å±¾
 
 echo.
 echo ===============================================
-echo       ä»Šå¤©åƒä»€ä¹ˆ - AIç¾Žé£ŸæŽ¨èåŠ©æ‰‹
+echo       ½ñÌì³ÔÊ²Ã´ - AIÃÀÊ³ÍÆ¼öÖúÊÖ
 echo ===============================================
 echo.
 
-REM æ£€æŸ¥DockerçŽ¯å¢ƒ
-echo [STEP] æ£€æŸ¥DockerçŽ¯å¢ƒ...
+REM ¼ì²éDocker»·¾³
+echo [STEP] ¼ì²éDocker»·¾³...
 docker info >nul 2>&1
 if errorlevel 1 (
-    echo [ERROR] Dockeræœªè¿è¡Œï¼Œè¯·å…ˆå¯åŠ¨Docker Desktop
+    echo [ERROR] DockerÎ´ÔËÐÐ£¬ÇëÏÈÆô¶¯Docker Desktop
     echo.
-    echo [INFO] è¯·ç¡®ä¿ï¼š
-    echo    1. Docker Desktopå·²å®‰è£…å¹¶æ­£åœ¨è¿è¡Œ
-    echo    2. å¯ç”¨WSL 2å¼•æ“Žï¼ˆæŽ¨èï¼Œå¯åœ¨Docker Desktopè®¾ç½®ä¸­é…ç½®ï¼‰
-    echo    3. å¦‚æžœå·²å®‰è£…ä½†æœªè¿è¡Œï¼Œè¯·ä»Žå¼€å§‹èœå•å¯åŠ¨Docker Desktop
+    echo [INFO] ÇëÈ·±££º
+    echo    1. Docker DesktopÒÑ°²×°²¢ÕýÔÚÔËÐÐ
+    echo    2. ÆôÓÃWSL 2ÒýÇæ£¨ÍÆ¼ö£¬¿ÉÔÚDocker DesktopÉèÖÃÖÐÅäÖÃ£©
+    echo    3. Èç¹ûÒÑ°²×°µ«Î´ÔËÐÐ£¬Çë´Ó¿ªÊ¼²Ëµ¥Æô¶¯Docker Desktop
     echo.
-    echo [INFO] ä¸‹è½½åœ°å€: https://www.docker.com/products/docker-desktop/
+    echo [INFO] ÏÂÔØµØÖ·: https://www.docker.com/products/docker-desktop/
     echo.
     pause
     exit /b 1
@@ -29,98 +29,98 @@ if errorlevel 1 (
 
 docker-compose --version >nul 2>&1
 if errorlevel 1 (
-    echo [ERROR] Docker Composeæœªå®‰è£…
-    echo [INFO] Docker Composeé€šå¸¸éšDocker Desktopä¸€èµ·å®‰è£…
+    echo [ERROR] Docker ComposeÎ´°²×°
+    echo [INFO] Docker ComposeÍ¨³£ËæDocker DesktopÒ»Æð°²×°
     pause
     exit /b 1
 )
 
-echo [SUCCESS] DockerçŽ¯å¢ƒæ£€æŸ¥é€šè¿‡
+echo [SUCCESS] Docker»·¾³¼ì²éÍ¨¹ý
 
-REM æ£€æŸ¥çŽ¯å¢ƒé…ç½®
-echo [STEP] æ£€æŸ¥çŽ¯å¢ƒé…ç½®...
+REM ¼ì²é»·¾³ÅäÖÃ
+echo [STEP] ¼ì²é»·¾³ÅäÖÃ...
 if not exist ".env" (
-    echo [WARNING] .envæ–‡ä»¶ä¸å­˜åœ¨ï¼Œæ­£åœ¨åˆ›å»º...
+    echo [WARNING] .envÎÄ¼þ²»´æÔÚ£¬ÕýÔÚ´´½¨...
     if exist ".env.example" (
         copy ".env.example" ".env" >nul
-        echo [INFO] å·²ä»Ž.env.exampleåˆ›å»º.envæ–‡ä»¶
+        echo [INFO] ÒÑ´Ó.env.example´´½¨.envÎÄ¼þ
     ) else (
-        echo [ERROR] .env.exampleæ–‡ä»¶ä¸å­˜åœ¨ï¼Œæ— æ³•åˆ›å»ºé…ç½®æ–‡ä»¶
-        echo [INFO] è¯·æ‰‹åŠ¨åˆ›å»º.envæ–‡ä»¶å¹¶é…ç½®å¿…è¦çš„çŽ¯å¢ƒå˜é‡
+        echo [ERROR] .env.exampleÎÄ¼þ²»´æÔÚ£¬ÎÞ·¨´´½¨ÅäÖÃÎÄ¼þ
+        echo [INFO] ÇëÊÖ¶¯´´½¨.envÎÄ¼þ²¢ÅäÖÃ±ØÒªµÄ»·¾³±äÁ¿
         pause
         exit /b 1
     )
 )
 
-REM æ£€æŸ¥APIå¯†é’¥
+REM ¼ì²éAPIÃÜÔ¿
 findstr /C:"OPENAI_API_KEY=sk-" .env >nul 2>&1
 if errorlevel 1 (
-    echo [WARNING] âš ï¸  APIå¯†é’¥æœªé…ç½®æˆ–æ ¼å¼ä¸æ­£ç¡®
-    echo [INFO] è¯·ç¼–è¾‘.envæ–‡ä»¶ï¼Œè®¾ç½®æ‚¨çš„APIå¯†é’¥ï¼š
+    echo [WARNING] APIÃÜÔ¿Î´ÅäÖÃ»ò¸ñÊ½²»ÕýÈ·
+    echo [INFO] Çë±à¼­.envÎÄ¼þ£¬ÉèÖÃÄúµÄAPIÃÜÔ¿£º
     echo [INFO]   OPENAI_API_KEY=your_api_key_here
     echo [INFO]   OPENAI_BASE_URL=your_api_base_url
     echo [INFO]   LLM_MODEL=your_model_name
     echo.
-    echo [INFO] æ”¯æŒçš„APIä¾›åº”å•†è¯·å‚è€ƒ: LLM_CONFIG.md
+    echo [INFO] Ö§³ÖµÄAPI¹©Ó¦ÉÌÇë²Î¿¼: LLM_CONFIG.md
     echo.
-    set /p continue="æ˜¯å¦ç»§ç»­å¯åŠ¨ï¼Ÿ(y/N): "
+    set /p continue="ÊÇ·ñ¼ÌÐøÆô¶¯£¿(y/N): "
     if /i not "!continue!"=="y" (
-        echo [INFO] è¯·é…ç½®APIå¯†é’¥åŽé‡æ–°è¿è¡Œ
+        echo [INFO] ÇëÅäÖÃAPIÃÜÔ¿ºóÖØÐÂÔËÐÐ
         pause
         exit /b 1
     )
 ) else (
-    echo [SUCCESS] çŽ¯å¢ƒé…ç½®æ£€æŸ¥é€šè¿‡
+    echo [SUCCESS] »·¾³ÅäÖÃ¼ì²éÍ¨¹ý
 )
 
-REM åˆ›å»ºå¿…è¦ç›®å½•
-echo [STEP] åˆ›å»ºå¿…è¦ç›®å½•...
+REM ´´½¨±ØÒªÄ¿Â¼
+echo [STEP] ´´½¨±ØÒªÄ¿Â¼...
 if not exist "data\cypher" mkdir "data\cypher"
 if not exist "nginx" mkdir "nginx"
 if not exist "logs" mkdir "logs"
-echo [SUCCESS] ç›®å½•åˆ›å»ºå®Œæˆ
+echo [SUCCESS] Ä¿Â¼´´½¨Íê³É
 
-REM å‰ç«¯ä¾èµ–å°†åœ¨Dockerå®¹å™¨ä¸­è‡ªåŠ¨å®‰è£…
-echo [INFO] å‰ç«¯ä¾èµ–å°†åœ¨Dockerå®¹å™¨ä¸­è‡ªåŠ¨å®‰è£…
+REM Ç°¶ËÒÀÀµ½«ÔÚDockerÈÝÆ÷ÖÐ×Ô¶¯°²×°
+echo [INFO] Ç°¶ËÒÀÀµ½«ÔÚDockerÈÝÆ÷ÖÐ×Ô¶¯°²×°
 
-REM å¯åŠ¨æœåŠ¡
-echo [STEP] å¯åŠ¨æ‰€æœ‰æœåŠ¡...
+REM Æô¶¯·þÎñ
+echo [STEP] Æô¶¯ËùÓÐ·þÎñ...
 
-echo [INFO] æ‹‰å–Dockeré•œåƒ...
+echo [INFO] À­È¡Docker¾µÏñ...
 docker-compose pull
 
-echo [INFO] æž„å»ºåº”ç”¨é•œåƒ...
+echo [INFO] ¹¹½¨Ó¦ÓÃ¾µÏñ...
 docker-compose build
 
-echo [INFO] å¯åŠ¨æœåŠ¡å®¹å™¨...
+echo [INFO] Æô¶¯·þÎñÈÝÆ÷...
 docker-compose up -d
 
-echo [SUCCESS] æœåŠ¡å¯åŠ¨å‘½ä»¤æ‰§è¡Œå®Œæˆ
+echo [SUCCESS] ·þÎñÆô¶¯ÃüÁîÖ´ÐÐÍê³É
 
-REM ç­‰å¾…æœåŠ¡å°±ç»ª
-echo [STEP] ç­‰å¾…æœåŠ¡å¯åŠ¨...
+REM µÈ´ý·þÎñ¾ÍÐ÷
+echo [STEP] µÈ´ý·þÎñÆô¶¯...
 
 set max_retries=60
 set retry_count=0
 
-REM ç­‰å¾…åŽç«¯æœåŠ¡
-echo [INFO] ç­‰å¾…åŽç«¯æœåŠ¡å¯åŠ¨...
+REM µÈ´ýºó¶Ë·þÎñ
+echo [INFO] µÈ´ýºó¶Ë·þÎñÆô¶¯...
 
 :check_backend
 curl -f http://localhost:8000/health >nul 2>&1
 if not errorlevel 1 (
-    echo [SUCCESS] åŽç«¯æœåŠ¡å¯åŠ¨æˆåŠŸ
+    echo [SUCCESS] ºó¶Ë·þÎñÆô¶¯³É¹¦
     goto backend_ready
 )
 
 set /a retry_count+=1
 if !retry_count! geq !max_retries! (
-    echo [ERROR] åŽç«¯æœåŠ¡å¯åŠ¨è¶…æ—¶
-    echo [INFO] æŸ¥çœ‹æ—¥å¿—: docker-compose logs backend
-    echo [INFO] å¸¸è§é—®é¢˜ï¼š
-    echo [INFO]   - æ£€æŸ¥ç«¯å£8000æ˜¯å¦è¢«å ç”¨
-    echo [INFO]   - æ£€æŸ¥Dockerå†…å­˜æ˜¯å¦å……è¶³
-    echo [INFO]   - æ£€æŸ¥APIå¯†é’¥é…ç½®æ˜¯å¦æ­£ç¡®
+    echo [ERROR] ºó¶Ë·þÎñÆô¶¯³¬Ê±
+    echo [INFO] ²é¿´ÈÕÖ¾: docker-compose logs backend
+    echo [INFO] ³£¼ûÎÊÌâ£º
+    echo [INFO]   - ¼ì²é¶Ë¿Ú8000ÊÇ·ñ±»Õ¼ÓÃ
+    echo [INFO]   - ¼ì²éDockerÄÚ´æÊÇ·ñ³ä×ã
+    echo [INFO]   - ¼ì²éAPIÃÜÔ¿ÅäÖÃÊÇ·ñÕýÈ·
     pause
     exit /b 1
 )
@@ -131,22 +131,22 @@ goto check_backend
 
 :backend_ready
 
-REM ç­‰å¾…Nginxä»£ç†æœåŠ¡
-echo [INFO] ç­‰å¾…Nginxä»£ç†æœåŠ¡å¯åŠ¨...
+REM µÈ´ýNginx´úÀí·þÎñ
+echo [INFO] µÈ´ýNginx´úÀí·þÎñÆô¶¯...
 set retry_count=0
 
 :check_nginx
 curl -f http://localhost >nul 2>&1
 if not errorlevel 1 (
-    echo [SUCCESS] Nginxä»£ç†æœåŠ¡å¯åŠ¨æˆåŠŸ
+    echo [SUCCESS] Nginx´úÀí·þÎñÆô¶¯³É¹¦
     goto nginx_ready
 )
 
 set /a retry_count+=1
 if !retry_count! geq !max_retries! (
-    echo [WARNING] Nginxä»£ç†æœåŠ¡å¯åŠ¨è¶…æ—¶
-    echo [INFO] æŸ¥çœ‹æ—¥å¿—: docker-compose logs nginx
-    echo [INFO] å°è¯•ç›´æŽ¥è®¿é—®å‰ç«¯: http://localhost:3000
+    echo [WARNING] Nginx´úÀí·þÎñÆô¶¯³¬Ê±
+    echo [INFO] ²é¿´ÈÕÖ¾: docker-compose logs nginx
+    echo [INFO] ³¢ÊÔÖ±½Ó·ÃÎÊÇ°¶Ë: http://localhost:3000
     goto nginx_ready
 )
 
@@ -156,21 +156,21 @@ goto check_nginx
 
 :nginx_ready
 
-REM ç­‰å¾…å‰ç«¯æœåŠ¡
-echo [INFO] ç­‰å¾…å‰ç«¯æœåŠ¡å¯åŠ¨...
+REM µÈ´ýÇ°¶Ë·þÎñ
+echo [INFO] µÈ´ýÇ°¶Ë·þÎñÆô¶¯...
 set retry_count=0
 
 :check_frontend
 curl -f http://localhost:3000 >nul 2>&1
 if not errorlevel 1 (
-    echo [SUCCESS] å‰ç«¯æœåŠ¡å¯åŠ¨æˆåŠŸ
+    echo [SUCCESS] Ç°¶Ë·þÎñÆô¶¯³É¹¦
     goto frontend_ready
 )
 
 set /a retry_count+=1
 if !retry_count! geq !max_retries! (
-    echo [ERROR] å‰ç«¯æœåŠ¡å¯åŠ¨è¶…æ—¶
-    echo [INFO] æŸ¥çœ‹æ—¥å¿—: docker-compose logs frontend
+    echo [ERROR] Ç°¶Ë·þÎñÆô¶¯³¬Ê±
+    echo [INFO] ²é¿´ÈÕÖ¾: docker-compose logs frontend
     pause
     exit /b 1
 )
@@ -181,43 +181,43 @@ goto check_frontend
 
 :frontend_ready
 
-REM æ˜¾ç¤ºæœåŠ¡ä¿¡æ¯
+REM ÏÔÊ¾·þÎñÐÅÏ¢
 echo.
 echo ===============================================
-echo            ðŸŽ‰ éƒ¨ç½²å®Œæˆï¼
+echo            ²¿ÊðÍê³É£¡
 echo ===============================================
 echo.
 
-echo ðŸ“‹ æœåŠ¡è®¿é—®åœ°å€ï¼š
-echo    ðŸŒ åº”ç”¨é¦–é¡µ:     http://localhost
-echo    âš›ï¸  å‰ç«¯åº”ç”¨:     http://localhost:3000
-echo    ðŸ åŽç«¯API:      http://localhost:8000
-echo    ðŸ“Š Neo4jæµè§ˆå™¨:  http://localhost:7474
-echo       ç”¨æˆ·å: neo4j, å¯†ç : all-in-rag
-echo    ðŸ—„ï¸  MilvusæŽ§åˆ¶å°: http://localhost:9001
-echo       ç”¨æˆ·å: minioadmin, å¯†ç : minioadmin
+echo ·þÎñ·ÃÎÊµØÖ·£º
+echo    Ó¦ÓÃÊ×Ò³:     http://localhost
+echo    Ç°¶ËÓ¦ÓÃ:     http://localhost:3000
+echo    ºó¶ËAPI:      http://localhost:8000
+echo    Neo4jä¯ÀÀÆ÷:  http://localhost:7474
+echo       ÓÃ»§Ãû: neo4j, ÃÜÂë: all-in-rag
+echo    Milvus¿ØÖÆÌ¨: http://localhost:9001
+echo       ÓÃ»§Ãû: minioadmin, ÃÜÂë: minioadmin
 echo.
 
-echo ðŸ“ ç®¡ç†å‘½ä»¤ï¼š
-echo    æŸ¥çœ‹æœåŠ¡çŠ¶æ€: docker-compose ps
-echo    æŸ¥çœ‹æ—¥å¿—:     docker-compose logs -f [service_name]
-echo    é‡å¯æœåŠ¡:     docker-compose restart [service_name]
-echo    åœæ­¢æœåŠ¡:     docker-compose down
-echo    å®Œå…¨æ¸…ç†:     docker-compose down -v
+echo ¹ÜÀíÃüÁî£º
+echo    ²é¿´·þÎñ×´Ì¬: docker-compose ps
+echo    ²é¿´ÈÕÖ¾:     docker-compose logs -f [service_name]
+echo    ÖØÆô·þÎñ:     docker-compose restart [service_name]
+echo    Í£Ö¹·þÎñ:     docker-compose down
+echo    ÍêÈ«ÇåÀí:     docker-compose down -v
 echo.
 
-echo ðŸ’¡ å¼€å‘æç¤ºï¼š
-echo    - ä»£ç ä¿®æ”¹åŽéœ€è¦é‡æ–°æž„å»º: docker-compose build [service_name]
-echo    - æŸ¥çœ‹å®žæ—¶æ—¥å¿—: docker-compose logs -f
-echo    - è¿›å…¥å®¹å™¨è°ƒè¯•: docker-compose exec [service_name] bash
+echo ¿ª·¢ÌáÊ¾£º
+echo    - ´úÂëÐÞ¸ÄºóÐèÒªÖØÐÂ¹¹½¨: docker-compose build [service_name]
+echo    - ²é¿´ÊµÊ±ÈÕÖ¾: docker-compose logs -f
+echo    - ½øÈëÈÝÆ÷µ÷ÊÔ: docker-compose exec [service_name] bash
 echo.
 
-echo [SUCCESS] ðŸš€ ç³»ç»Ÿå¯åŠ¨å®Œæˆï¼Œæ­£åœ¨ä¸ºæ‚¨æ‰“å¼€åº”ç”¨...
+echo [SUCCESS] ÏµÍ³Æô¶¯Íê³É£¬ÕýÔÚÎªÄú´ò¿ªÓ¦ÓÃ...
 
-REM æ‰“å¼€æµè§ˆå™¨
+REM ´ò¿ªä¯ÀÀÆ÷
 timeout /t 3 /nobreak >nul
 start http://localhost
 
 echo.
-echo æŒ‰ä»»æ„é”®é€€å‡º...
+echo °´ÈÎÒâ¼üÍË³ö...
 pause >nul
