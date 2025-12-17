@@ -24,8 +24,8 @@
 **Windows 用户（推荐）:**
 ```bash
 # 1. 克隆项目
-git clone https://github.com/FutureUnreal/What-to-eat-today.git
-cd What-to-eat-today
+git clone https://github.com/LeslieWylie/What_to_eat.git
+cd What_to_eat
 
 # 2. 双击运行或命令行启动
 start.bat
@@ -34,8 +34,8 @@ start.bat
 **Linux/macOS 用户:**
 ```bash
 # 1. 克隆项目
-git clone https://github.com/FutureUnreal/What-to-eat-today.git
-cd What-to-eat-today
+git clone https://github.com/LeslieWylie/What_to_eat.git
+cd What_to_eat
 
 # 2. 给脚本执行权限并启动
 chmod +x start.sh stop.sh
